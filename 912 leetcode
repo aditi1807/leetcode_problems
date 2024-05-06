@@ -1,0 +1,57 @@
+class Solution {
+    public void merge(int p,int q,int r,int[] arr)
+    {
+        int[] l=new int[q-p+1];
+        int[] ri=new int[r-q];
+        int n1=q-p+1;
+        int n2=r-q;
+        for(int i=0;i<n1;i++)
+        l[i]=arr[p+i];
+        for(int j=0;j<n2;j++)
+        {
+            ri[j]=arr[j+q+1];
+        }
+        int i=0;
+        int j=0;
+        int k=p;
+        while(i<(q-p+1) && j<(r-q))
+        {
+            if(l[i]<ri[j])
+            {
+                arr[k]=l[i];
+                i++;
+            }
+            else{
+                arr[k]=ri[j];
+                j++;
+            }
+            k++;
+        }
+        while(i<(q-p+1))
+        {
+            arr[k]=l[i];
+            i++;
+            k++;
+        }
+        while(j<(r-q))
+        {
+            arr[k]=ri[j];
+            j++;
+            k++;
+        }
+    }
+    public void mergesort(int p,int r,int[] arr)
+    {
+        if(p<r)
+        {
+        int q=(p+r)/2;
+        mergesort(p,q,arr);
+        mergesort(q+1,r,arr);
+        merge(p,q,r,arr);
+        }
+    }
+    public int[] sortArray(int[] nums) {
+        mergesort(0,nums.length-1,nums);
+        return nums;
+    }
+}
